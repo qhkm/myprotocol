@@ -1,4 +1,4 @@
-package main
+package myprotocol
 
 import (
 	_ "bytes"
@@ -8,11 +8,6 @@ import (
 	"fmt"
 	"io"
 )
-
-func main() {
-	a := newAES256WithRandomKey()
-	fmt.Println(a)
-}
 
 // Create new aes with random keyb
 func newAES256WithRandomKey() cipher.Block {
@@ -30,4 +25,16 @@ func newAES256WithRandomKey() cipher.Block {
 	}
 
 	return cip
+}
+
+func padPKC7(b []byte) error {
+	padSize := aes.BlockSize - (len(b) % aes.BlockSize)
+	pad := bytes.Repeat([]byte{byte(padSize)}, padSize)
+	return append(b, pad...)
+}
+
+func unpadPKC7(b []byte) []byte {
+	padSize := int(b[len(b)-1])
+	miaw := b[:len(b)-padS]
+	fmt.Println(miaw)
 }
